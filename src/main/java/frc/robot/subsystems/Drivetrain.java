@@ -41,7 +41,7 @@ public class Drivetrain extends SubsystemBase {
     left = new MotorControllerGroup(leftFront, leftBack);
     right = new MotorControllerGroup(rightFront, rightBack);
 
-    drive = new DifferentialDrive(leftFront, rightFront);
+    drive = new DifferentialDrive(left, right);
   }
 
   public void joystickDrive(XboxController controller, double speed) {
@@ -49,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
     //double zRotation = controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*-speed;
     //drive.arcadeDrive(xSpeed, zRotation);
 
-    drive.arcadeDrive(((controller.getRawAxis(Constants.RIGHT_TRIGGER))-(controller.getRawAxis(Constants.LEFT_TRIGGER)))*speed, controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*-speed);
+    drive.arcadeDrive(((controller.getRightTriggerAxis())-(controller.getLeftTriggerAxis()))*speed, controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*-speed);
   }
 
   public void moveMotor() {
