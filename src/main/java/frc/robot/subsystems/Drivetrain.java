@@ -68,6 +68,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Rotation: ", leftXAxis*-speed);
   }
 
+  public void aimLimelight(double driveCommand, double steerCommand) {
+    drive.arcadeDrive(driveCommand, steerCommand);
+  }
+
   public void moveMotor() {
     leftFront.set(0.1);
   }

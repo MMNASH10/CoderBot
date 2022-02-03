@@ -8,13 +8,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
 
 public class JoystickDrive extends CommandBase {
   Drivetrain drivetrain;
+  Limelight limelight;
   /** Creates a new JoystickDrive. */
-  public JoystickDrive(Drivetrain dt) {
+  public JoystickDrive(Drivetrain dt, Limelight l) {
     drivetrain = dt;
-    addRequirements(drivetrain);
+    limelight = l;
+    addRequirements(drivetrain, limelight);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,7 +28,16 @@ public class JoystickDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.joystickDrive(RobotContainer.driverController, Constants.DRIVE_SPEED);
+    
+    if (RobotContainer.driverController.getAButton()) {
+      if (limelight.isTargetValid()) {
+        drivetrain.aimLimelight(0, -1*limelight.getSteer());
+      } else {
+        drivetrain.stop();
+      }
+    } else {
+      drivetrain.joystickDrive(RobotContainer.driverController, Constants.DRIVE_SPEED);
+    }
   }
 
   // Called once the command ends or is interrupted.
