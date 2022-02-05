@@ -57,7 +57,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void joystickDrive(XboxController controller, double speed) {
     double xSpeed = (controller.getRightTriggerAxis()-controller.getLeftTriggerAxis())*speed;
-    double zRotation = controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*-speed;
+    double zRotation = controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*speed;
     drive.arcadeDrive(xSpeed, zRotation);
 
     //drive.arcadeDrive(0.1, 0);
@@ -70,6 +70,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void aimLimelight(double driveCommand, double steerCommand) {
     drive.arcadeDrive(driveCommand, steerCommand);
+  }
+
+  public void seekLimelight() {
+    drive.arcadeDrive(0, 0.38);
   }
 
   public void moveMotor() {

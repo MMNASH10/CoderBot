@@ -33,7 +33,7 @@ public class JoystickDrive extends CommandBase {
       if (limelight.isTargetValid()) {
         drivetrain.aimLimelight(0, -1*limelight.getSteer());
       } else {
-        drivetrain.stop();
+        drivetrain.seekLimelight();
       }
     } else {
       drivetrain.joystickDrive(RobotContainer.driverController, Constants.DRIVE_SPEED);

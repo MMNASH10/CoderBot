@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
-  private double STEER_K = -0.1f; // needs to be tuned
-  private double min_cmd = 0.03f;
+  private double STEER_K = -0.04; // needs to be tuned
+  private double min_cmd = 0.07;
   private double steer_cmd;
   //private double DRIVE_K = 0.26;
   //private double DESIRED_TARGET_AREA = 10.0; //percent of the screen
@@ -35,20 +35,18 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getSteer() {
-    if (tv == 0.0f)
-    {
-      // We don't see the target, seek for the target by spinning in place at a safe speed.
-      steer_cmd = 0.3f;
-    } else {
-      steer_cmd = 0f;
-      // We do see the target, execute aiming code
-      if (tx > 1.0) {
-        return steer_cmd = tx * STEER_K + min_cmd; //either + or -
-      } else if (tx < 1.0) {
-        return steer_cmd = tx * STEER_K - min_cmd; //either + or -
-      }
+    //double steer_cmd = (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0)) * STEER_K;
+    //return steer_cmd;
+    
+    // We do see the target, execute aiming code
+    steer_cmd = 0;
+    if (tx > 1.0) {
+      return steer_cmd = tx * STEER_K - min_cmd; //either + or -
+    } else if (tx < -1.0) {
+      return steer_cmd = tx * STEER_K + min_cmd; //either + or -
     }
-    return steer_cmd;
+    //}
+    return steer_cmd; 
   }
 
   /* NEED TO UPDATE EQUATION */
@@ -57,19 +55,19 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getX() {
-    return tx;
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
   }
 
   public double getArea() {
-    return ta;
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
   }
 
   public double getY(){
-    return ty;
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
   }
 
   public boolean isTargetValid() { //ONLY RETURNS FALSE if you type tv == 1.0 (must not be updating enough)
-    if (tv == 1.0) {
+    if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1.0) {
       return true;
     }
     return false;
@@ -82,7 +80,7 @@ public class Limelight extends SubsystemBase {
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-    current_distance = 37.0 / (Math.tan(20.474 + ty)); //NEED TO UPDATE EQUATION
+    current_distance = (104 - 25.5625) / (Math.tan(35.5866 + ty)); //NEED TO UPDATE EQUATION
 
     SmartDashboard.putNumber("Current Distance: ", current_distance);
     SmartDashboard.putBoolean("Is Target Valid", isTargetValid());

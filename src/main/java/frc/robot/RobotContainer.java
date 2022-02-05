@@ -54,8 +54,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton button = new JoystickButton(driverController, XboxController.Button.kA.value);
-    button.whileHeld(moveMotor);
+    //JoystickButton button = new JoystickButton(driverController, XboxController.Button.kA.value);
+    //button.whileHeld(moveMotor);
 
   }
 
