@@ -72,6 +72,7 @@ public class Drivetrain extends SubsystemBase {
     drive.arcadeDrive(driveCommand, steerCommand);
   }
 
+  // robot turns until target is detected
   public void seekLimelight() {
     drive.arcadeDrive(0, 0.38);
   }
