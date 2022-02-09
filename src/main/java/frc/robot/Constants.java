@@ -14,7 +14,7 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final double DRIVE_SPEED = 0.5;
+    public static final double DRIVE_SPEED = 0.3;
     public static final int RIGHT_TRIGGER = 3;
     public static final int LEFT_TRIGGER = 2;
     public static final int XBOX_LEFT_X_AXIS = 0;

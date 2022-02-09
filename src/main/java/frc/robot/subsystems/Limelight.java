@@ -18,6 +18,7 @@ public class Limelight extends SubsystemBase {
   //private double MAX_DRIVE = 0.7;
 
   private double current_distance;
+  private double cur_dis;
 
   private NetworkTable limelight;
   private double tv;
@@ -50,8 +51,12 @@ public class Limelight extends SubsystemBase {
   }
 
   /* NEED TO UPDATE EQUATION */
-  public double getDistance() {
+  public double getDistance1() {
     return current_distance;
+  }
+
+  public double getDistance2() {
+    return cur_dis;
   }
 
   public double getX() {
@@ -73,6 +78,17 @@ public class Limelight extends SubsystemBase {
     return false;
   }
 
+  public void setPipeline(Integer pipeline) {
+    if(pipeline<0){
+        pipeline = 0;
+        throw new IllegalArgumentException("Pipeline can not be less than zero");
+    }else if(pipeline>9){
+        pipeline = 9;
+        throw new IllegalArgumentException("Pipeline can not be greater than nine");
+    }
+    limelight.getEntry("pipeline").setValue(pipeline);
+}
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -80,9 +96,11 @@ public class Limelight extends SubsystemBase {
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-    current_distance = (104 - 25.5625) / (Math.tan(35.5866 + ty)); //NEED TO UPDATE EQUATION
+    //current_distance = (104 - 25.5625) / (Math.tan(35.5866 + ty)); //NEED TO UPDATE EQUATION
+    cur_dis = 96 + -4.12*ty + 0.0981*(Math.pow(ty, 2)) + -1.22*(Math.pow(10, -3))*(Math.pow(ty, 3));
 
-    SmartDashboard.putNumber("Current Distance: ", current_distance);
+    //SmartDashboard.putNumber("Current Distance: ", getDistance1());
+    SmartDashboard.putNumber("Current Distance2: ", getDistance2());
     SmartDashboard.putBoolean("Is Target Valid", isTargetValid());
     SmartDashboard.putNumber("Horizonatal Error (tx): ", tx);
     SmartDashboard.putNumber("Vertical Error (ty): ", ty);
