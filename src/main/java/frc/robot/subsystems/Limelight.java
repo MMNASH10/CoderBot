@@ -17,7 +17,7 @@ public class Limelight extends SubsystemBase {
   //private double DESIRED_TARGET_AREA = 10.0; //percent of the screen
   //private double MAX_DRIVE = 0.7;
 
-  private double current_distance;
+  //private double current_distance;
   private double cur_dis;
 
   private NetworkTable limelight;
@@ -50,10 +50,10 @@ public class Limelight extends SubsystemBase {
     return steer_cmd; 
   }
 
-  /* NEED TO UPDATE EQUATION */
+  /* NEED TO UPDATE EQUATION
   public double getDistance1() {
     return current_distance;
-  }
+  } */
 
   public double getDistance2() {
     return cur_dis;
