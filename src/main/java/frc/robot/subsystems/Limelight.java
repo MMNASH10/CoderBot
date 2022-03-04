@@ -36,11 +36,11 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getSteer() {
-    //double steer_cmd = (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0)) * STEER_K;
+    steer_cmd = (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0)) * STEER_K;
     //return steer_cmd;
     
     // We do see the target, execute aiming code
-    steer_cmd = 0;
+    //steer_cmd = 0;
     if (tx > 1.0) {
       return steer_cmd = tx * STEER_K - min_cmd; //either + or -
     } else if (tx < -1.0) {

@@ -57,13 +57,12 @@ public class Drivetrain extends SubsystemBase {
 
   public void joystickDrive(XboxController controller, double speed) {
     double xSpeed = (controller.getRightTriggerAxis()-controller.getLeftTriggerAxis())*speed;
-    double zRotation = controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*speed;
+    double zRotation = controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*-speed;
     drive.arcadeDrive(xSpeed, zRotation);
-
-    //drive.arcadeDrive(0.1, 0);
+    
     //drive.arcadeDrive((controller.getRightTriggerAxis()-controller.getLeftTriggerAxis())*speed, controller.getRawAxis(Constants.XBOX_LEFT_X_AXIS)*-speed);
-    SmartDashboard.putNumber("Left Trigger Axis: ", leftTriggerAxis);
-    SmartDashboard.putNumber("Right Trigger Axis: ", rightTriggerAxis);
+    // SmartDashboard.putNumber("Left Trigger Axis: ", leftTriggerAxis);
+   // SmartDashboard.putNumber("Right Trigger Axis: ", rightTriggerAxis);
     SmartDashboard.putNumber("Speed: ", (rightTriggerAxis - leftTriggerAxis)*speed);
     SmartDashboard.putNumber("Rotation: ", leftXAxis*-speed);
   }
@@ -77,10 +76,12 @@ public class Drivetrain extends SubsystemBase {
     drive.arcadeDrive(0, 0.38);
   }
 
-  public void moveMotor() {
-    leftFront.set(0.1);
+  public void autoDrive(){
+    drive.tankDrive(0.3, 0.3);
   }
-
+  public void autoTurn(){
+    drive.arcadeDrive(0, 0.3);
+  }
   public void stop() {
     drive.stopMotor();
   }

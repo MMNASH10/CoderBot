@@ -28,11 +28,10 @@ public class JoystickDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
     if (RobotContainer.driverController.getAButton()) {
       if (limelight.isTargetValid()) {
         // if target is detected, run aim command
-        drivetrain.aimLimelight(0, -1*limelight.getSteer());
+        drivetrain.aimLimelight(0, limelight.getSteer());
       } else {
         // robot turns until target is detected
         drivetrain.seekLimelight();
